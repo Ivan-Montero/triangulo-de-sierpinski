@@ -33,7 +33,7 @@ h2 {
 }
 
 #pantalla {
-  width: 90%;
+  width: 40%;
   padding: 10px;
   font-size: 20px;
   font-family: 'Courier New', Courier, monospace;
@@ -46,7 +46,7 @@ h2 {
 }
 
 input[type="button"] {
-  width: 70px;
+  width: 175px;
   height: 40px;
   margin-right: 5px;
   margin-bottom: 5px;
