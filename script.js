@@ -21,9 +21,6 @@ let pointsCounter = 1;
 
 // Función para dibujar un triángulo equilátero en el canvas
 function dibujarTriangulo() {
-/*     const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d'); */
-
     if (!ctx) {
         console.error('Tu navegador no soporta Canvas.');
         return;
@@ -53,16 +50,21 @@ function dibujarTriangulo() {
 }
 
 function dibujarPunto(punto) {
-    console.log(punto); // Logs the random point inside the canvas
-
     // Seleccionar el color actual y avanzar al siguiente
     colorActual = colores[colorIndex];
     colorIndex = (colorIndex + 1) % colores.length; // Reiniciar el índice si llega al final
 
-    ctx.beginPath();
-    ctx.arc(punto.x, punto.y, 2, 0, Math.PI * 5); // Dibujar un pequeño círculo en el punto medio
-    ctx.fillStyle = colorActual; // Usar el color actual
-    ctx.fill();
+    if(pointsCounter < 20){
+        ctx.beginPath();
+        ctx.arc(punto.x, punto.y, 2, 0, Math.PI * 2); // Dibujar un pequeño círculo en el punto medio
+        ctx.fillStyle = colorActual; // Usar el color actual
+        ctx.fill();
+    } else {
+        ctx.beginPath();
+        ctx.arc(punto.x, punto.y, 1, 0, Math.PI * 1); // Dibujar un pequeño círculo en el punto medio
+        ctx.fillStyle = colorActual; // Usar el color actual
+        ctx.fill();
+    }
 }
 
 function firstPoint() {
@@ -70,10 +72,12 @@ function firstPoint() {
     currentPoint = initialPoint;
 
     dibujarPunto(currentPoint); 
+    refreshScreen();
 }
 
 function refreshScreen() {
-    document.getElementById("pantalla").value += pointsCounter;
+    console.log (pointsCounter);
+    document.getElementById("pantalla").value = pointsCounter;
 }
 
 // Llamar a la función para dibujar el triángulo al cargar la página
@@ -83,25 +87,32 @@ firstPoint();
 
 
 function findNewPoint() {
-
+    const auxRandom = Math.random();
     console.log("buscando nuevo punto...");
-    switch (Math.floor(Math.random() * 3) + 1) {
+    console.log(auxRandom);
+    switch (Math.floor(auxRandom* 3) + 1) {
         case 1: 
         currentRandomVertex = pointA;
+        console.log("pointA");
             break;
         case 2: 
         currentRandomVertex = pointB;
+        console.log("pointB");
             break;
         case 3: 
         currentRandomVertex = pointC;
+        console.log("pointC");
             break;
     }
+    
 
-    // ctx.beginPath();
-    // ctx.moveTo(currentRandomVertex.x, currentRandomVertex.y); // Moverse al vértice aleatorio actual
-    // ctx.lineTo(currentPoint.x, currentPoint.y); // Línea al punto actual
-    // ctx.strokeStyle = '#CCCCCC'; // Color del borde
-    // ctx.stroke(); // Dibujar el borde
+    if(pointsCounter < 15){
+        ctx.beginPath();
+        ctx.moveTo(currentRandomVertex.x, currentRandomVertex.y); // Moverse al vértice aleatorio actual
+        ctx.lineTo(currentPoint.x, currentPoint.y); // Línea al punto actual
+        ctx.strokeStyle = '#CCCCCC'; // Color del borde
+        ctx.stroke(); // Dibujar el borde
+    }
     
     // Calcular el punto medio entre currentRandomVertex y currentPoint
     const midpoint = {
@@ -118,20 +129,18 @@ function findNewPoint() {
 
 function agregar(valor) {
     pointsCounter += valor;
+    refreshScreen();
     while (valor > 0) {
         findNewPoint();
         valor -= 1; 
     }
-    
 }
 
 function borrar() {
     document.getElementById("pantalla").value = "";
-}
-
-function calcular() {
-    const resultado = eval(document.getElementById("pantalla").value);
-    document.getElementById("pantalla").value = resultado;    
+    dibujarTriangulo();
+    firstPoint();
+    pointsCounter = 1;
 }
 
 const botones = document.querySelectorAll("button");
