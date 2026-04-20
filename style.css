@@ -1,0 +1,109 @@
+html{
+  height: 100%;
+  background:
+  linear-gradient(217deg, rgba(237, 39, 17, 0.8), transparent 15%),
+  linear-gradient(100deg, rgb(30 31 42), transparent 90%),
+  linear-gradient(336deg, rgb(58 63 75), transparent 90.71%);
+}
+
+body {
+  font-family:'Lucida Sans';
+  font-size: large;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 30px;
+  color: #1e1f2a;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 10px;
+  color:  #1e1f2aad;
+}
+
+.calculadora {
+  background-image: linear-gradient( 135deg, #8a9db2 10%, #3a3f4b 100%);
+  width: 320px;
+  margin: 120px auto;
+  padding: 2%;
+  border-radius: 16px;
+  box-shadow: 0 0 15px 5px #f5e8c7;
+}
+
+#pantalla {
+  width: 90%;
+  padding: 10px;
+  font-size: 20px;
+  font-family: 'Courier New', Courier, monospace;
+  margin-bottom: 10px;
+  text-align: right;
+  color: #3a3f4b;
+  font-weight: 600;
+  border: 4px inset #8a9db2f0;
+  background-color: #f5e8c7;
+}
+
+input[type="button"] {
+  width: 70px;
+  height: 40px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e1f2a;
+
+  
+  cursor: pointer;
+  /* -webkit-tap-highlight-color: #8a9db2; */
+  -webkit-tap-highlight-color: transparent;
+  border-radius: 999vw;
+  background-color: rgb(138, 157, 178, 0.75);
+  box-shadow: -0.15em -0.15em 0.15em -0.075em rgb(92, 101, 117, 0.25),
+      0.0375em 0.0375em 0.0675em 0 rgb(58, 63, 75, 0.1);
+
+  box-shadow:
+    /* 1 */
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    /* 2 */
+    -0.05em -0.05em 0.05em 0 inset rgba(5, 5, 5, 0.25),
+    /* 3 */
+    0 0 0 0 inset rgba(5, 5, 5, 0.1),
+    /* 4 */
+    0 0 0.05em 0.2em inset rgba(255, 255, 255, 0.25),
+    /* 5 */
+    0.025em 0.05em 0.1em 0 inset rgba(255, 255, 255, 1),
+    /* 6 */
+    0.12em 0.12em 0.12em inset rgba(255, 255, 255, 0.25),
+    /* 7 */
+    -0.075em -0.25em 0.25em 0.1em inset rgba(5, 5, 5, 0.25);
+}
+
+@media (hover: hover) {
+  input[type="button"]:hover {
+    box-shadow:
+        /* 1 */
+        0.1em 0.15em 0.05em 0 inset rgba(5, 5, 5, 0.75),
+        /* 2 */
+        -0.025em -0.03em 0.05em 0.025em inset rgba(5, 5, 5, 0.5),
+        /* 3 */
+        0.25em 0.25em 0.2em 0 inset rgba(5, 5, 5, 0.5),
+        /* 4 */
+        0 0 0.05em 0.5em inset rgba(172, 159, 159, 0.15),
+        /* 5 */
+        0 0 0 0 inset rgb(67, 62, 51),
+        /* 6 */
+        0.12em 0.12em 0.12em inset rgba(140, 130, 130, 0.25),
+        /* 7 */
+        -0.075em -0.12em 0.2em 0.1em inset rgba(5, 5, 5, 0.25);
+    transform: scale(0.975);
+    
+    letter-spacing: -0.05em;
+    color: #1e1f2ae6;
+  }
+}
+
+input[type="button"]:last-child {
+  margin-right: 0;
+}
