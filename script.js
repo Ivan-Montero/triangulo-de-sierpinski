@@ -15,9 +15,10 @@ let pointA = { x: centerX, y: centerY - height / 2 }; // Vértice superior
 let pointB = { x: centerX - sideLength / 2, y: centerY + height / 2 }; // Vértice inferior izquierdo
 let pointC = { x: centerX + sideLength / 2, y: centerY + height / 2 }; // Vértice inferior derecho
 
-let currentPoint = pointA;
+const initialPoint = {x: Math.random() * canvas.width, y: Math.random() * canvas.height};
+let currentPoint = initialPoint;
 let currentRandomVertex = pointA;
-let pointsCounter = 1;
+let pointsCounter = 0;
 
 // Función para dibujar un triángulo equilátero en el canvas
 function dibujarTriangulo() {
@@ -67,24 +68,56 @@ function dibujarPunto(punto) {
     }
 }
 
-function firstPoint() {
-    const initialPoint = {x: Math.random() * canvas.width, y: Math.random() * canvas.height};
-    currentPoint = initialPoint;
-
-    dibujarPunto(currentPoint); 
-    refreshScreen();
-}
-
 function refreshScreen() {
     console.log (pointsCounter);
     document.getElementById("pantalla").value = pointsCounter;
 }
 
+function dibujaEsquema(){
+    // Dibujar una llave entre currentRandomVertex y currentPoint
+    ctx.beginPath();
+    ctx.moveTo(currentRandomVertex.x, currentRandomVertex.y); // Moverse al vértice aleatorio actual
+
+    // Calcular el vector entre los dos puntos
+    const vector = {
+        x: currentPoint.x - currentRandomVertex.x,
+        y: currentPoint.y - currentRandomVertex.y,
+    };
+
+    // Calcular el vector perpendicular
+    const perpendicular = {
+        x: -vector.y,
+        y: vector.x,
+    };
+
+    // Normalizar el vector perpendicular
+    const length = Math.sqrt(perpendicular.x ** 2 + perpendicular.y ** 2);
+    const normalizedPerpendicular = {
+        x: (perpendicular.x / length) * 50, // 50 es la magnitud del desplazamiento
+        y: (perpendicular.y / length) * 50,
+    };
+
+    // Calcular el punto de control para la curva (desplazado perpendicularmente)
+    const controlPoint = {
+        x: (currentRandomVertex.x + currentPoint.x) / 2 + normalizedPerpendicular.x,
+        y: (currentRandomVertex.y + currentPoint.y) / 2 + normalizedPerpendicular.y,
+    };
+
+    // Dibujar la curva de Bézier (llave)
+    ctx.bezierCurveTo(
+        controlPoint.x, controlPoint.y, // Punto de control
+        controlPoint.x, controlPoint.y, // Segundo punto de control (igual para un bucle simple)
+        currentPoint.x, currentPoint.y  // Punto final
+    );
+
+    ctx.strokeStyle = '#FF5733'; // Color de la llave
+    ctx.lineWidth = 2; // Ancho de la línea
+    ctx.stroke(); // Dibujar la curva
+}
+
 // Llamar a la función para dibujar el triángulo al cargar la página
 dibujarTriangulo();
-firstPoint();
-
-
+dibujarPunto(currentPoint);
 
 function findNewPoint() {
     const auxRandom = Math.random();
@@ -112,6 +145,7 @@ function findNewPoint() {
         ctx.lineTo(currentPoint.x, currentPoint.y); // Línea al punto actual
         ctx.strokeStyle = '#CCCCCC'; // Color del borde
         ctx.stroke(); // Dibujar el borde
+        // dibujaEsquema();
     }
     
     // Calcular el punto medio entre currentRandomVertex y currentPoint
@@ -139,7 +173,7 @@ function agregar(valor) {
 function borrar() {
     document.getElementById("pantalla").value = "";
     dibujarTriangulo();
-    firstPoint();
+
     pointsCounter = 1;
 }
 
